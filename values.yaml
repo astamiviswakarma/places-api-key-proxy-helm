@@ -5,8 +5,8 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  tag: stable
+  repository: astamia/places-api-proxy
+  tag: latest
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -48,3 +48,7 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+crossOrigin: "*"
+googleApiKey: "AIza_googleDemoKeyShouldBeReplaced"

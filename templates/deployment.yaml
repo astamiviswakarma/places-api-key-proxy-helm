@@ -24,18 +24,25 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: API_KEY
+              value: {{default "AIza_googleDemoKeyShouldBeReplaced" .Values.googleApiKey}}
+            - name: CROSS_ORIGIN
+              value: {{default "*" .Values.crossOrigin}}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8088
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&name=cruise
               port: http
+              periodSeconds: 60
           readinessProbe:
             httpGet:
-              path: /
+              path: /api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&types=food&name=cruise
               port: http
+              periodSeconds: 60
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
